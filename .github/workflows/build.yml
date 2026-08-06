@@ -1,4 +1,4 @@
-name: Test Workflow
+name: Node.js CI Pipeline
 
 on:
   push:
@@ -6,8 +6,20 @@ on:
       - main
 
 jobs:
-  test:
+  build:
     runs-on: ubuntu-latest
 
     steps:
-      - run: echo "GitHub Actions is working!"
+      - name: Checkout Source Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Run Tests
+        run: npm test
